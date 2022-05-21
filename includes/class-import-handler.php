@@ -180,6 +180,12 @@ class Import_Handler {
 				$status
 			);
 
+			$post_author= apply_filters(
+				'import_from_pixelfed_post_author',
+				isset( $this->options['post_author'] ) ? $this->options['post_author'] : '1',
+				$status
+			);
+
 			$args = array(
 				'post_title'    => $title,
 				'post_content'  => $content,
@@ -190,6 +196,7 @@ class Import_Handler {
 				),
 				'post_type'     => $post_type,
 				'post_category' => array($post_category),
+				'post_author'=>$post_author,
 				'post_date_gmt' => ! empty( $status->created_at ) ? date( 'Y-m-d H:i:s', strtotime( $status->created_at ) ) : '', // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 				'meta_input'    => array(),
 			);

@@ -25,6 +25,7 @@ class Options_Handler
 		'post_type'              => 'post',
 		'post_status'            => 'publish',
 		'post_category'            => '',
+		'post_author'            => '',
 		'post_format'            => '',
 		'include_replies'        => false,
 		'include_reblogs'        => false,
@@ -187,6 +188,9 @@ class Options_Handler
 		if (isset($settings['post_category'])) {
 			$this->options['post_category'] = wp_unslash($settings['post_category']); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		}
+		if (isset($settings['post_author'])) {
+			$this->options['post_author'] = wp_unslash($settings['post_author']); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		}
 	
 		// These can be either `"1"` or `true`.
 		$this->options['include_reblogs'] = !empty($settings['include_reblogs']);
@@ -281,6 +285,17 @@ class Options_Handler
 									'selected'=>$this->options['post_category']
 									)); ?>
 							<p class="description"><?php esc_html_e('Default category for newly imported statuses.', 'import-from-pixelfed'); ?></p>
+						</td>
+					</tr>
+					<tr valign="top">
+						<th scope="row"><?php esc_html_e('Default post author', 'import-from-pixelfed'); ?></th>
+						<td>
+							<?php wp_dropdown_users( array(
+									'show_option_none'=>'Select author',
+									'name'=>'import_from_pixelfed_settings[post_author]',
+									'selected'=>$this->options['post_author']
+									)); ?>
+							<p class="description"><?php esc_html_e('Default author for newly imported statuses.', 'import-from-pixelfed'); ?></p>
 						</td>
 					</tr>
 
